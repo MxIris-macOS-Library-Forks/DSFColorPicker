@@ -1,7 +1,5 @@
 //
-//  DSFColorPickerViewController.swift
-//
-//  Copyright © 2023 Darren Ford. All rights reserved.
+//  Copyright © 2024 Darren Ford. All rights reserved.
 //
 //  MIT license
 //
@@ -24,7 +22,7 @@ import Cocoa
 // MARK: - Color picker view
 
 @IBDesignable open class DSFColorPickerView: NSView {
-	static let defaultThemes = DSFColorPickerThemes()
+	//static let defaultThemes = DSFColorPickerThemes()
 
 //	open override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
 //		return true
@@ -58,11 +56,14 @@ import Cocoa
 		}
 	}
 
+	/// The currently assigned theme
+	@IBOutlet public var theme: DSFColorPickerTheme! = DSFColorPickerTheme()
+
 	/// Primarily used for inspectable support, to see a palette in interface builder
-	@IBInspectable public var namedTheme: String = "default"
+	@IBInspectable public var namedTheme: String?
 
 	/// Show or hide the themes popup button
-	@IBInspectable public var showThemes: Bool = false
+	@IBInspectable public var showPalettes: Bool = false
 
 	/// Show or hide the button with the currently selected color
 	@IBInspectable public var showCurrent: Bool = true
@@ -90,22 +91,22 @@ import Cocoa
 	// MARK: - Modifiable properties
 
 	/// The theme being used for the picker.  If nil, uses the default built-in theme
-	public var selectedTheme: DSFColorPickerTheme? {
+	public var selectedPalette: DSFColorPickerPalette? {
 		didSet {
-			self.updateLayoutForTheme()
+			self.updateLayoutForSelectedPalette()
 		}
 	}
 
 	/// The number of columns in the color grid
 	public var colCount: Int {
 		// Theme dictates the number of columns
-		return self.selectedTheme?.colCount ?? 0
+		return self.selectedPalette?.colCount ?? 0
 	}
 
 	/// The number of rows in the color grid
 	public var rowCount: Int {
 		// Theme dictates the number of rows
-		return self.selectedTheme?.rowCount ?? 0
+		return self.selectedPalette?.rowCount ?? 0
 	}
 
 	/// The color that's currently selected in the control
@@ -113,6 +114,9 @@ import Cocoa
 		didSet {
 			self.selectedColorButton?.color = self.selectedColor
 			self.selectedColorButton?.isEnabled = self.selectedColor != nil
+
+			/// If the color panel button is visible, push the change through to it too
+			self.colorPanelButton?.selectedColor = selectedColor ?? .clear
 
 			/// Callback if one is defined
 			self.colorSelectedCallback?(self.selectedColor)
@@ -141,6 +145,9 @@ import Cocoa
 
 	///
 	var allColorButtons: [DSFColorPickerButton] = []
+
+	/// If the control has 'show color panel' set, the button
+	var colorPanelButton: ColorPanelButton?
 
 	/// The recents userDefaults keys
 	internal var recentsUserDefaultsKey: String?

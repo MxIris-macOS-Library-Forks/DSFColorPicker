@@ -1,7 +1,5 @@
 //
-//  DSFColorPickerButton.swift
-//
-//  Copyright © 2023 Darren Ford. All rights reserved.
+//  Copyright © 2024 Darren Ford. All rights reserved.
 //
 //  MIT license
 //
@@ -23,7 +21,7 @@ import Cocoa
 
 // Internal class used by the color picker view
 
-class DSFColorPickerButton: NSButton {
+internal class DSFColorPickerButton: NSButton {
 	private var stateObserver: NSKeyValueObservation?
 	var showSelected: Bool = false {
 		didSet {

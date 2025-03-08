@@ -79,7 +79,7 @@ Configurable using a 2d array of colors, for example
 [Full size](https://dagronf.github.io/art/projects/DSFColorPicker/default.png)
 
 ```swift
-	let theme = DSFColorPickerTheme(name: "default", argbValueGrid: [
+	let theme = DSFColorPickerTheme(name: "My Colors", argbValueGrid: [
 		[0xF5402C, 0xEB1360, 0x9C1BB1, 0x6634B8, 0x3D4DB7],
 		[0x47AE4A, 0x009687, 0x01BBD5, 0x00A6F6, 0x0C93F5],
 		[0x89C43F, 0xCCDD1E, 0xFFEC17, 0xFEC001, 0xFF9800],
@@ -149,30 +149,12 @@ Dynamically adjusts to high-contrast display modes
 * High contrast support
 * VoiceOver reads out 'named' color views as they are interacted with ("<name> Color Selector")
 
-# Changes
-
-## `3.0.0`
-
-* SwiftUI support
-
-## `2.0.0`
-
-* Updated the package to depend on the [`DSFColorSampler`](https://github.com/dagronf/DSFColorSampler) package instead of embedding an older version of the source.
-
-* Removed 'direct' method of installing as the SPM package now depends on `DSFColorSampler`.
-
-## `1.2.0`
-
-* Fixed a compile bug when archiving ([Github issue tracker](https://github.com/dagronf/DSFColorPicker/issues/1))
-
 # License
-
-MIT. Use it for anything you want, just attribute my work. Let me know if you do use it somewhere, I'd love to hear about it!
 
 ```
 MIT License
 
-Copyright (c) 2023 Darren Ford
+Copyright (c) 2024 Darren Ford
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

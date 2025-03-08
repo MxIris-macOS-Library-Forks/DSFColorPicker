@@ -1,7 +1,5 @@
 //
-//  ColorPanelButton.swift
-//
-//  Copyright © 2023 Darren Ford. All rights reserved.
+//  Copyright © 2024 Darren Ford. All rights reserved.
 //
 //  MIT license
 //
@@ -39,8 +37,25 @@ internal class ColorPanelButton: NSButton, DSFAppearanceCacheNotifiable {
 	var colorObserver: NSKeyValueObservation?
 	var colorChange: ((NSColor) -> Void)?
 
+	// Reentrancy lock
+	let lock = SemLock()
+
 	// A 'fake' colorwell for handling color well
 	private let fakeWell = FakeColorWell()
+
+	// The selected color
+	var selectedColor: NSColor {
+		get {
+			lock.whileLocked {
+				self.fakeWell.color
+			}
+		}
+		set {
+			lock.ifLockable {
+				self.fakeWell.color = newValue
+			}
+		}
+	}
 
 	func setup() {
 		self.translatesAutoresizingMaskIntoConstraints = false
